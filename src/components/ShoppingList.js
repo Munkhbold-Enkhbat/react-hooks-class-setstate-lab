@@ -15,11 +15,13 @@ class ShoppingList extends React.Component {
       selectedCategory: event.target.value
     })     
   }
-  
-  // we want to filter the items to only display the ones based on the selected category
-  itemsToDisplay = this.props.items.filter((item) => {
-    return (this.state.selectedCategory === "All") ? true : this.state.selectedCategory === item.category;
-  });
+
+  itemsToDisplay = () => {
+    return this.props.items.filter((item) => {
+        if (this.state.selectedCategory === "All") return true
+        return item.category === this.state.selectedCategory;
+      });
+  }
 
   render(){
     return (
@@ -35,7 +37,7 @@ class ShoppingList extends React.Component {
           </select>
         </div>
         <ul className="Items">
-          {this.itemsToDisplay.map((item) => (
+          {this.itemsToDisplay().map((item) => (
             <Item key={item.id} name={item.name} category={item.category} />
           ))}
         </ul>
